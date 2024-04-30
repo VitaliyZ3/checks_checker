@@ -1,0 +1,20 @@
+version: "3.9"
+
+services:
+  backend:
+    tty: true
+    depends_on:
+      - postgres
+    build:
+      context: "./src"
+    ports:
+      - 8000:8000
+
+  postgres:
+    image: postgres:13.3
+    environment:
+      POSTGRES_DB: "model_db"
+      POSTGRES_USER: "Vitaliy"
+      POSTGRES_PASSWORD: "root"
+    ports:
+      - 5432:5432
