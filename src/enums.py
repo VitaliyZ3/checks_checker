@@ -12,5 +12,12 @@ class EnumToListMixin(Enum):
         return [f.value for f in cls]
 
 
-class ExampleEnum(EnumToListMixin, StrEnum):
-    CREATE_SLICE = "CREATE_SLICE"
+class InvoiceOrderingFields(EnumToListMixin, StrEnum):
+    date = "date"
+    amount = "amount"
+    payment_type = "payment_type"
+
+
+class SortOrder(StrEnum):
+    asc = "asc"
+    desc = "desc"

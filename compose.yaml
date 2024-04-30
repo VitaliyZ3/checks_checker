@@ -13,8 +13,8 @@ services:
   postgres:
     image: postgres:13.3
     environment:
-      POSTGRES_DB: "model_db"
-      POSTGRES_USER: "Vitaliy"
+      POSTGRES_DB: "invoice_db"
+      POSTGRES_USER: "backend_app"
       POSTGRES_PASSWORD: "root"
     ports:
       - 5432:5432

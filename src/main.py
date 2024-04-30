@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 from starlette.middleware.cors import CORSMiddleware
 from src.auth_core import auth_controller
-from src.check_core import checks_controller
+from src.invoice_core import invoice_controller
 
 
 def init_cors(app: FastAPI) -> None:
@@ -16,7 +16,7 @@ def init_cors(app: FastAPI) -> None:
 
 def init_routers(app: FastAPI) -> None:
     app.include_router(auth_controller.router, prefix="/auth")
-    app.include_router(checks_controller.router, prefix="/checks")
+    app.include_router(invoice_controller.router, prefix="/invoice")
 
 
 def create_app() -> FastAPI:
