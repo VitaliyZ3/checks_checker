@@ -1,9 +1,10 @@
 from sqlalchemy import URL, create_engine, Engine
 from src.config import settings
+import functools
 
 
-class DatabaseHelper:
-    engine: Engine
+class DatabaseClient:
+    _engine: Engine
 
     def __init__(self, url, echo: bool = False) -> None:
         self.engine = create_engine(
@@ -21,7 +22,10 @@ url_object = URL.create(
 )
 
 
-db_helper = DatabaseHelper(
-    url=url_object,
-    echo=True
-)
+@functools.cache
+def _get_DB_Client() -> DatabaseClient:
+    DBClient = DatabaseClient(
+        url=url_object,
+        echo=True
+    )
+    return DBClient

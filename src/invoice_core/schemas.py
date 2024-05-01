@@ -22,8 +22,12 @@ class Product(BaseModel):
     total: int
 
 
+class PaymentType(BaseModel):
+    name: Literal['cash', 'cashless']
+
+
 class Payment(BaseModel):
-    type: Literal['cash', 'cashless']
+    type: PaymentType
     amount: int
 
 

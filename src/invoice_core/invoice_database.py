@@ -1,9 +1,9 @@
-import functools
-
+from src.db_client import _get_DB_Client, DatabaseClient
 
 
 class InvoiceDatabase:
 
-@functools.cache
-def __get_INVOICE_DB() -> InvoiceDatabase:
-    return InvoiceDatabase(**Settings)
+    DB_Client: DatabaseClient
+
+    def __init__(self):
+        self.DB_Client = _get_DB_Client()
