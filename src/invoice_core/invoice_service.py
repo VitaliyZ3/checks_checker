@@ -1,4 +1,4 @@
-from typing import Tuple, List
+from typing import List
 from src.auth_core.schemas import CurrentUserInfo
 from src.invoice_core.schemas import (
     Page,
@@ -10,7 +10,7 @@ from fastapi import HTTPException
 from src.invoice_core.invoice_database import InvoiceDatabase
 
 
-def create_invoice(user_info: CurrentUserInfo, invoice_model: InvoiceModelCreateSchema) -> None:
+def create_invoice(user_info: CurrentUserInfo, invoice_model: InvoiceModelCreateSchema) -> InvoiceModelSchema:
 
     total = sum([product.price * product.quantity for product in invoice_model.products])
 
@@ -34,7 +34,7 @@ def create_invoice(user_info: CurrentUserInfo, invoice_model: InvoiceModelCreate
     )
     db_client = InvoiceDatabase()
     invoice_db = db_client.save_invoice_to_db(invoice)
-    
+
     return InvoiceModelSchema.model_validate(invoice_db, from_attributes=True)
 
 
@@ -43,4 +43,5 @@ def get_invoices(user_info: CurrentUserInfo, page: Page) -> List[InvoiceModelSch
     invoices = db_client.get_invoices_from_db(page)
 
     invoice_models = [InvoiceModelSchema.model_validate(invoice, from_attributes=True) for invoice in invoices]
+
     return invoice_models

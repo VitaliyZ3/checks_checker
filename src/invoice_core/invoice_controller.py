@@ -1,10 +1,6 @@
-from fastapi import APIRouter, Request, Query, Depends
+from fastapi import APIRouter, Depends
 from src.invoice_core import invoice_service
-from typing import Optional, List
-from src.enums import (
-    InvoiceOrderingFields,
-    SortOrder
-)
+from typing import List
 from src.invoice_core.schemas import (
     Page,
     InvoiceModelSchema,
@@ -32,7 +28,7 @@ def create_invoice(
 def get_invoices(
     user_info: CurrentUserInfo = Depends(get_current_user_into),
     filters: Page = Depends()
-):
+) -> List[InvoiceModelSchema]:
     invoices = invoice_service.get_invoices(
         user_info=user_info,
         page=filters
