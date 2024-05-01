@@ -6,6 +6,7 @@ DEFAULT_PAGE_NUMBER = 0
 
 class ConfigSettings(BaseSettings):
     postgres_host: str
+    postgres_port: str
     postgres_user: str
     postgres_password: str
     postgres_database: str

@@ -6,7 +6,6 @@ from sqlalchemy.orm import Mapped
 from sqlalchemy.orm import relationship
 from sqlalchemy.orm import mapped_column
 
-
 Base = declarative_base()
 
 
@@ -22,19 +21,12 @@ class Products(Base):
     invoice_fk: Mapped[int] = mapped_column(ForeignKey('invoices.id'))
 
 
-class PaymentType(Base):
-    __tablename__ = "payment_types"
-
-    id: Mapped[int] = mapped_column(primary_key=True)
-    name: Mapped[str] = mapped_column(String(8))
-
-
 class Payment(Base):
     __tablename__ = "payments"
 
     id: Mapped[int] = mapped_column(primary_key=True)
-    payment_type: Mapped["PaymentType"] = relationship(uselist=True)
-    payment_type_fk: Mapped[int] = mapped_column(ForeignKey('payment_types.id'))
+    type: Mapped[str]= mapped_column(String(8))
+    amount: Mapped[int]
     invoice: Mapped["Invoice"] = relationship(back_populates="payment", uselist=False)
 
 

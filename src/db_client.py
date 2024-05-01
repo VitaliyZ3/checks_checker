@@ -7,25 +7,24 @@ class DatabaseClient:
     _engine: Engine
 
     def __init__(self, url, echo: bool = False) -> None:
-        self.engine = create_engine(
+        self._engine = create_engine(
             url=url,
             echo=echo
         )
 
-
-url_object = URL.create(
-    "postgresql+pg8000",
-    username=settings.postgres_user,
-    password=settings.postgres_password,
-    host=settings.postgres_host,
-    database=settings.postgres_database,
-)
-
-
 @functools.cache
 def _get_DB_Client() -> DatabaseClient:
+    url_object = URL.create(
+        "postgresql+pg8000",
+        username=settings.postgres_user,
+        password=settings.postgres_password,
+        host=settings.postgres_host,
+        port=settings.postgres_port,
+        database=settings.postgres_database,
+    )
+    print(url_object)
     DBClient = DatabaseClient(
         url=url_object,
-        echo=True
+        echo=False
     )
     return DBClient
