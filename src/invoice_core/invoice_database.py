@@ -8,7 +8,6 @@ from src.invoice_core.models import (
 from sqlalchemy.orm import Session
 from typing import List
 from src.invoice_core.schemas import Page
-from src.enums import SortOrder
 
 
 class InvoiceDatabase:

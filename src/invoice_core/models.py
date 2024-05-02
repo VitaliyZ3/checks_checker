@@ -5,6 +5,8 @@ from sqlalchemy.orm import declarative_base
 from sqlalchemy.orm import Mapped
 from sqlalchemy.orm import relationship
 from sqlalchemy.orm import mapped_column
+from src.auth_core.models import User
+
 
 Base = declarative_base()
 
@@ -25,7 +27,7 @@ class Payment(Base):
     __tablename__ = "payments"
 
     id: Mapped[int] = mapped_column(primary_key=True)
-    type: Mapped[str]= mapped_column(String(8))
+    type: Mapped[str] = mapped_column(String(8))
     amount: Mapped[int]
     invoice: Mapped["Invoice"] = relationship(back_populates="payment", uselist=False)
 
@@ -34,6 +36,9 @@ class Invoice(Base):
     __tablename__ = "invoices"
 
     id: Mapped[int] = mapped_column(primary_key=True)
+    user: Mapped["User"] = relationship(back_populates="invoice", uselist=False)
+    user_fk: Mapped[int] = mapped_column(ForeignKey("user.id"))
+    
     products: Mapped[list["Products"]] = relationship(back_populates="invoice", uselist=True)
     payment: Mapped["Payment"] = relationship(back_populates="invoice", uselist=False)
     payment_fk: Mapped[int] = mapped_column(ForeignKey("payments.id"))

@@ -6,13 +6,14 @@ from sqlalchemy import pool
 from alembic import context
 from config import settings
 from invoice_core.models import *
+from auth_core.models import *
 
 config = context.config
 
 if config.config_file_name is not None:
     fileConfig(config.config_file_name)
 
-database_url = f"postgresql+pg8000://{settings.postgres_user}:{settings.postgres_password}@{settings.postgres_host}:{settings.postgres_port}/{settings.postgres_database}"
+database_url = f"postgresql+pg8000://{settings.db_user}:{settings.db_password}@{settings.db_host}:{settings.db_port}/{settings.db_database}"
 
 config.set_main_option("sqlalchemy.url", database_url)
 

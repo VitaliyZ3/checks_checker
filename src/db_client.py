@@ -1,6 +1,7 @@
 from sqlalchemy import URL, create_engine, Engine
 from src.config import settings
 import functools
+from sqlalchemy.orm import Session
 
 
 class DatabaseClient:
@@ -12,19 +13,29 @@ class DatabaseClient:
             echo=echo
         )
 
+
 @functools.cache
 def _get_DB_Client() -> DatabaseClient:
     url_object = URL.create(
         "postgresql+pg8000",
-        username=settings.postgres_user,
-        password=settings.postgres_password,
-        host=settings.postgres_host,
-        port=settings.postgres_port,
-        database=settings.postgres_database,
+        username=settings.db_user,
+        password=settings.db_password,
+        host=settings.db_host,
+        port=settings.db_port,
+        database=settings.db_database,
     )
-    print(url_object)
     DBClient = DatabaseClient(
         url=url_object,
         echo=False
     )
     return DBClient
+
+
+def _get_db_session() -> Session:
+    db_client = _get_DB_Client()
+    session = Session(
+        db_client._engine,
+        expire_on_commit=True,
+        autoflush=False
+    )
+    return session

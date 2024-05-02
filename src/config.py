@@ -5,11 +5,12 @@ DEFAULT_PAGE_NUMBER = 0
 
 
 class ConfigSettings(BaseSettings):
-    postgres_host: str
-    postgres_port: str
-    postgres_user: str
-    postgres_password: str
-    postgres_database: str
+    db_host: str
+    db_port: str
+    db_user: str
+    db_password: str
+    db_database: str
+    SECRET_AUTH: str
 
 
 settings = ConfigSettings()
