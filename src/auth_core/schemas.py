@@ -1,4 +1,4 @@
-from pydantic import BaseModel, EmailStr, ConfigDict
+from pydantic import EmailStr, ConfigDict
 from typing import Optional
 from fastapi_users import schemas
 

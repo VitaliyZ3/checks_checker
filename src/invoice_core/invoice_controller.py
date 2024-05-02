@@ -17,7 +17,7 @@ def create_invoice(
     user_info=Depends(current_user)
 ) -> InvoiceModelSchema:
     return invoice_service.create_invoice(
-        user_info=user_info,
+        user_model=user_info,
         invoice_model=invoice_defition
     )
 
@@ -28,7 +28,7 @@ def get_invoices(
     user_info=Depends(current_user)
 ) -> List[InvoiceModelSchema]:
     invoices = invoice_service.get_invoices(
-        user_info=user_info,
+        user_model=user_info,
         page=filters
     )
     return invoices

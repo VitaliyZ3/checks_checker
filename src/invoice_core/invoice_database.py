@@ -1,14 +1,14 @@
 from src.db_client import _get_DB_Client, DatabaseClient
 from src.invoice_core.schemas import InvoiceModelSchema
 from src.invoice_core.models import (
-    Products,
+    Product,
     Payment,
     Invoice
 )
 from sqlalchemy.orm import Session
 from typing import List
 from src.invoice_core.schemas import Page
-
+from src.auth_core.models import User
 
 class InvoiceDatabase:
 
@@ -23,25 +23,25 @@ class InvoiceDatabase:
             autoflush=False
         )
 
-    def save_invoice_to_db(self, invoice_to_create: InvoiceModelSchema) -> Invoice:
+    def save_invoice_to_db(self, invoice_to_create: InvoiceModelSchema, user_model: User) -> Invoice:
         invoice_db = Invoice(
             total=invoice_to_create.total,
             rest=invoice_to_create.rest
         )
 
-        for product_data in invoice_to_create.products:
-            product_db = Products(
+        for product_data in invoice_to_create.product:
+            product_db = Product(
                 **product_data.model_dump(),
                 invoice=invoice_db,
             )
-            invoice_db.products.append(product_db)
+            invoice_db.product.append(product_db)
 
         payment_db = Payment(
             **invoice_to_create.payment.model_dump(),
             invoice=invoice_db
         )
         invoice_db.payment = payment_db
-
+        invoice_db.user_fk = user_model.id
         self.session.add(invoice_db)
         self.session.commit()
 
@@ -49,7 +49,7 @@ class InvoiceDatabase:
 
         return invoice_db
 
-    def get_invoices_from_db(self, page: Page) -> List[Invoice]:
+    def get_invoices_from_db(self, page: Page, user_model: User) -> List[Invoice]:
         query = self.session.query(Invoice).join(Payment)
 
         # Sotring by invoice date of creation
@@ -67,6 +67,10 @@ class InvoiceDatabase:
         # Sorting by invoice payment type
         if page.payment_type:
             query = query.filter(Payment.type == page.payment_type)
+
+        # Filtering by user
+        if user_model:
+            query = query.filter(Invoice.user_fk == user_model.id)
 
         invoices = query.offset(page.page_num * page.page_size).limit(page.page_size).all()
 

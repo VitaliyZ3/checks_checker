@@ -1,14 +1,14 @@
 from sqlalchemy import Column, Integer, String, TIMESTAMP, Boolean
 from sqlalchemy.orm import Mapped
 from sqlalchemy.orm import mapped_column
-from sqlalchemy.ext.declarative import declarative_base
 from fastapi_users_db_sqlalchemy import SQLAlchemyBaseUserTable
 from datetime import datetime
-
-Base = declarative_base()
+from src.base import Base
 
 
 class User(SQLAlchemyBaseUserTable[int], Base):
+    __tablename__ = "users"
+
     id = Column(Integer, primary_key=True)
     email = Column(String, nullable=False)
     username = Column(String, nullable=False)

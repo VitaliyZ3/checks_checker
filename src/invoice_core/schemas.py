@@ -18,7 +18,6 @@ class Page(BaseModel):
     payment_type: Optional[Literal["cash", "cashless"]] = Field (Query(None, description="Invoice payment type"))
 
 
-
 class Product(BaseModel):
     name: str
     price: int
@@ -32,7 +31,7 @@ class Payment(BaseModel):
 
 
 class InvoiceModelCreateSchema(BaseModel):
-    products: List[Product]
+    product: List[Product]
     payment: Payment
 
 
@@ -40,7 +39,7 @@ class InvoiceModelSchema(BaseModel):
     model_config = ConfigDict(from_attributes=True)
 
     id: int = Field(None, description="Id of created invoice")
-    products: List[Product]
+    product: List[Product]
     payment: Payment
     total: int
     rest: int

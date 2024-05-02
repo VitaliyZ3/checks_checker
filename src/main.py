@@ -15,8 +15,8 @@ def init_cors(app: FastAPI) -> None:
 
 
 def init_routers(app: FastAPI) -> None:
-    app.include_router(auth_controller.router, prefix="/auth")
-    app.include_router(invoice_controller.router, prefix="/invoice")
+    app.include_router(auth_controller.router, prefix="/auth", tags=["Auth"])
+    app.include_router(invoice_controller.router, prefix="/invoice", tags=["Invoices"])
 
 
 def create_app() -> FastAPI:
