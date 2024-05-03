@@ -32,3 +32,4 @@ And we are there, now you can observe and test api endpoint
 
 And open the <http://localhost:8000/docs> for view documentation
 
+Example of printed invoice, you can observe in ./invoices/invoice_print_example.txt
