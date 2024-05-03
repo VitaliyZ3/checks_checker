@@ -2,7 +2,9 @@ from fastapi import FastAPI
 from starlette.middleware.cors import CORSMiddleware
 from src.auth_core import auth_controller
 from src.invoice_core import invoice_controller
+from src.config import settings
 
+print(settings.db_database)
 
 def init_cors(app: FastAPI) -> None:
     app.add_middleware(

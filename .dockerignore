@@ -1,0 +1,10 @@
+# # Ignore everything
+# **
+
+# # Allow files and directories required for the application
+# !Dockerfile
+# !requirements.txt
+# !src/
+# !*.py
+# !.env
+# !*.sh

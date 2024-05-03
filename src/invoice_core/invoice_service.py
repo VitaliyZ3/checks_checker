@@ -37,8 +37,8 @@ def create_invoice(user_model: User, invoice_model: InvoiceModelCreateSchema) ->
             invoice_id=invoice_db.id,
             user_id=invoice_db.user_fk
         )
-    except Exception:
-        raise HTTPException(status_code=500, detail="Error ocured while saving invoice text file")
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Error ocured while saving invoice text file, details: {e.__repr__()}")
 
     db_client.save_invoice_file(
         invoice_id=invoice_db.id,

@@ -6,7 +6,12 @@ services:
     depends_on:
       - postgres
     build:
-      context: "./src"
+      context: .
+      dockerfile: Dockerfile
+    env_file:
+      - ./.env
+    volumes:
+      - "./invoices:/usr/src/app/invoices"
     ports:
       - 8000:8000
 

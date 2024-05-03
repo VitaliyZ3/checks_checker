@@ -4,16 +4,26 @@ from sqlalchemy import engine_from_config
 from sqlalchemy import pool
 
 from alembic import context
-from config import settings
-from auth_core.models import *
-from invoice_core.models import *
+from src.auth_core.models import *
+from src.invoice_core.models import *
+
+from dotenv import load_dotenv
+import os
 
 config = context.config
+
+load_dotenv()
+db_host = os.environ.get("db_host")
+db_user = os.environ.get("db_user")
+db_password = os.environ.get("db_password")
+db_port = os.environ.get("db_port")
+db_database = os.environ.get("db_database")
+
 
 if config.config_file_name is not None:
     fileConfig(config.config_file_name)
 
-database_url = f"postgresql+pg8000://{settings.db_user}:{settings.db_password}@{settings.db_host}:{settings.db_port}/{settings.db_database}"
+database_url = f"postgresql+pg8000://{db_user}:{db_password}@{db_host}:{db_port}/{db_database}"
 
 config.set_main_option("sqlalchemy.url", database_url)
 
