@@ -1,8 +1,7 @@
 from sqlalchemy import Column, Integer, String, TIMESTAMP, Boolean
-from sqlalchemy.orm import Mapped
-from sqlalchemy.orm import mapped_column
 from fastapi_users_db_sqlalchemy import SQLAlchemyBaseUserTable
 from datetime import datetime
+# from base import Base
 from src.base import Base
 
 

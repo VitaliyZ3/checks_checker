@@ -10,6 +10,7 @@ from typing import List
 from src.invoice_core.schemas import Page
 from src.auth_core.models import User
 
+
 class InvoiceDatabase:
 
     _DB_Client: DatabaseClient
@@ -75,3 +76,13 @@ class InvoiceDatabase:
         invoices = query.offset(page.page_num * page.page_size).limit(page.page_size).all()
 
         return invoices
+
+    def get_invoice_by_id(self, invoice_id: int) -> Invoice:
+        return self.session.query(Invoice).filter(Invoice.id == invoice_id).first()
+
+    def save_invoice_file(self, invoice_id: int, file_path: str) -> Invoice:
+        invoice_db = self.session.query(Invoice).filter(Invoice.id == invoice_id).first()
+        invoice_db.text_invoice_file_path = file_path
+        self.session.add(invoice_db)
+        self.session.commit()
+        return invoice_db

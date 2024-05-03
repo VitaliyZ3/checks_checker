@@ -1,4 +1,5 @@
 from fastapi import APIRouter, Depends
+from fastapi.responses import FileResponse
 from src.invoice_core import invoice_service
 from typing import List
 from src.invoice_core.schemas import (
@@ -32,3 +33,11 @@ def get_invoices(
         page=filters
     )
     return invoices
+
+
+@router.get(
+    "/invoice-file/{invoice_id}",
+)
+def get_invoice_text(invoice_id: int) -> FileResponse:
+    invoice_file_path = invoice_service.get_invoice_print_file(invoice_id)
+    return FileResponse(invoice_file_path, media_type="text/plain", filename="invoice.txt")

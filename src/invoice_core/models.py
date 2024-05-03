@@ -1,11 +1,14 @@
-from sqlalchemy import ForeignKey, func
+from sqlalchemy import ForeignKey, func, Column
 from sqlalchemy import String
 from datetime import datetime
 from sqlalchemy.orm import Mapped
 from sqlalchemy.orm import relationship
 from sqlalchemy.orm import mapped_column
-from src.auth_core.models import User
 from src.base import Base
+from src.auth_core.models import User
+
+# from base import Base
+# from auth_core.models import User
 
 
 class Product(Base):
@@ -46,3 +49,4 @@ class Invoice(Base):
     total: Mapped[int]
     rest: Mapped[int]
     created_at: Mapped[datetime] = mapped_column(server_default=func.now())
+    text_invoice_file_path: Mapped[str] = mapped_column(nullable=True)

@@ -5,6 +5,7 @@ from sqlalchemy import pool
 
 from alembic import context
 from config import settings
+from auth_core.models import *
 from invoice_core.models import *
 
 config = context.config
