@@ -1,13 +1,23 @@
-## Invoice creating api
+## Invoice Manager api
 
 Requirements doc:
 <https://docs.google.com/document/d/1BXHc1_tzpsqpE1fMqkcWwVFmxDJ9kQNP40dmdYuYTqg>
 
-### Technology stack
+## List of apis
+### Invoices
+ - Create invoice
+ - Get invoices with sorting
+ - Get invoice print text
+### Auth
+ - Register user
+ - Login
+ - Logut
+   
+## Technology stack
  - fastapi, sqlalchemy
  - postgresql
 
-# Quick start
+## Quick start
 ### Start from docker-compose
 
 Create .env file in root and specify values below
