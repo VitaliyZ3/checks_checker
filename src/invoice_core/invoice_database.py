@@ -1,3 +1,5 @@
+from sqlalchemy.orm import Session
+from typing import List
 from src.db_client import _get_DB_Client, DatabaseClient
 from src.invoice_core.schemas import InvoiceModelSchema
 from src.invoice_core.models import (
@@ -5,13 +7,18 @@ from src.invoice_core.models import (
     Payment,
     Invoice
 )
-from sqlalchemy.orm import Session
-from typing import List
 from src.invoice_core.schemas import Page
 from src.auth_core.models import User
 
 
 class InvoiceDatabase:
+    """
+    Class is using like a database connector for invoice operation
+    If you need particular invoice db iteration, please extend this class
+    by writing new methods
+
+    Using in invoice_service.py
+    """
 
     _DB_Client: DatabaseClient
     session: Session

@@ -7,7 +7,13 @@ from src.invoice_core.schemas import (
 
 
 class InvoiceTextGenerator():
+    """
+    Class InvoiceTextGenerator is used for generation
+    invoice print text from InvoiceModelSchema
 
+    line_length: length of you`r printed invoice
+    username: name of the user, whom created invoice
+    """
     invoice: InvoiceModelSchema
     line_length: str
     username: str

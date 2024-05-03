@@ -6,6 +6,7 @@ from src.auth_core.schemas import UserRead, UserCreate
 
 router = APIRouter()
 
+# Used fastapi_users library that already have implemented auth func
 
 router.include_router(
     fastapi_users.get_auth_router(auth_backend),

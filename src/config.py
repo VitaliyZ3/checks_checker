@@ -2,7 +2,7 @@ from pydantic_settings import BaseSettings
 
 DEFAULT_PAGE_SIZE = 10
 DEFAULT_PAGE_NUMBER = 0
-FILE_STORAGE_PATH = "/tmp"
+FILE_STORAGE_PATH = "/invoices"
 
 
 class ConfigSettings(BaseSettings):
