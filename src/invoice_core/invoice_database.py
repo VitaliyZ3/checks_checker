@@ -31,7 +31,7 @@ class InvoiceDatabase:
             autoflush=False
         )
 
-    def save_invoice_to_db(self, invoice_to_create: InvoiceModelSchema, user_model: User) -> Invoice:
+    def save_invoice_to_db(self, invoice_to_create: InvoiceModelSchema) -> Invoice:
         invoice_db = Invoice(
             total=invoice_to_create.total,
             rest=invoice_to_create.rest
@@ -49,7 +49,7 @@ class InvoiceDatabase:
             invoice=invoice_db
         )
         invoice_db.payment = payment_db
-        invoice_db.user_fk = user_model.id
+        # invoice_db.user_fk = user_model.id
         self.session.add(invoice_db)
         self.session.commit()
 
@@ -57,7 +57,7 @@ class InvoiceDatabase:
 
         return invoice_db
 
-    def get_invoices_from_db(self, page: Page, user_model: User) -> List[Invoice]:
+    def get_invoices_from_db(self, page: Page) -> List[Invoice]:
         query = self.session.query(Invoice).join(Payment)
 
         # Sotring by invoice date of creation
@@ -77,8 +77,8 @@ class InvoiceDatabase:
             query = query.filter(Payment.type == page.payment_type)
 
         # Filtering by user
-        if user_model:
-            query = query.filter(Invoice.user_fk == user_model.id)
+        # if user_model:
+        #     query = query.filter(Invoice.user_fk == user_model.id)
 
         invoices = query.offset(page.page_num * page.page_size).limit(page.page_size).all()
 

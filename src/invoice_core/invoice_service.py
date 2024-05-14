@@ -15,7 +15,7 @@ from src.exceptions import TotalIncorrectError
 # This file is using for storing all Invoice business logic
 
 
-def create_invoice(user_model: User, invoice_model: InvoiceModelCreateSchema) -> InvoiceModelSchema:
+def create_invoice(invoice_model: InvoiceModelCreateSchema) -> InvoiceModelSchema:
     try:
         invoice = _calculate_invoice_model(invoice_model)
     except TotalIncorrectError:
@@ -24,33 +24,39 @@ def create_invoice(user_model: User, invoice_model: InvoiceModelCreateSchema) ->
     db_client = InvoiceDatabase()
 
     try:
-        invoice_db = db_client.save_invoice_to_db(invoice, user_model)
+        invoice_db = db_client.save_invoice_to_db(invoice)
     except SQLAlchemyError as e:
         raise HTTPException(status_code=500, detail=e._message)
 
     invoice_model = InvoiceModelSchema.model_validate(invoice_db, from_attributes=True)
-    invoice_text = _create_invoice_text(invoice, username=invoice_db.user.email)
+    # invoice_text = _create_invoice_text(invoice, username=invoice_db.user.email)
 
-    try:
-        invoice_file_path = _create_invoice_text_file(
-            invoice_text=invoice_text,
-            invoice_id=invoice_db.id,
-            user_id=invoice_db.user_fk
-        )
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Error ocured while saving invoice text file, details: {e.__repr__()}")
+    # try:
+    #     invoice_file_path = _create_invoice_text_file(
+    #         invoice_text=invoice_text,
+    #         invoice_id=invoice_db.id,
+    #         user_id=invoice_db.user_fk
+    #     )
+    # except Exception as e:
+    #     raise HTTPException(status_code=500, detail=f"Error ocured while saving invoice text file, details: {e.__repr__()}")
 
-    db_client.save_invoice_file(
-        invoice_id=invoice_db.id,
-        file_path=invoice_file_path
-    )
+    # db_client.save_invoice_file(
+    #     invoice_id=invoice_db.id,
+    #     file_path=invoice_file_path
+    # )
     return invoice_model
 
 
-def get_invoices(user_model: User, page: Page) -> List[InvoiceModelSchema]:
+def get_invoices(
+        # user_model: User, 
+        page: Page
+        ) -> List[InvoiceModelSchema]:
     db_client = InvoiceDatabase()
     try:
-        invoices = db_client.get_invoices_from_db(page, user_model)
+        invoices = db_client.get_invoices_from_db(
+            page
+            # user_model
+        )
     except SQLAlchemyError as e:
         raise HTTPException(status_code=500, detail=e._message)
 

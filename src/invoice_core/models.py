@@ -39,7 +39,7 @@ class Invoice(Base):
 
     id: Mapped[int] = mapped_column(primary_key=True)
     user: Mapped[User] = relationship(uselist=False)
-    user_fk: Mapped[int] = mapped_column(ForeignKey("users.id"))
+    user_fk: Mapped[int] = mapped_column(ForeignKey("users.id"), nullable=True)
 
     product: Mapped[list["Product"]] = relationship(back_populates="invoice",
                                                       uselist=True)
