@@ -1,4 +1,4 @@
-from locust import HttpUser, task, constant_pacing
+from locust import HttpUser, task, constant_pacing, LoadTestShape
 import json
 from config import cfg
 

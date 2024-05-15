@@ -10,7 +10,8 @@ class DatabaseClient:
     def __init__(self, url, echo: bool = False) -> None:
         self._engine = create_engine(
             url=url,
-            echo=echo
+            echo=echo,
+            pool_size=10
         )
 
 
@@ -31,6 +32,7 @@ def _get_DB_Client() -> DatabaseClient:
     return DBClient
 
 
+@functools.cache
 def _get_db_session() -> Session:
     db_client = _get_DB_Client()
     session = Session(

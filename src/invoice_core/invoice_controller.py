@@ -46,5 +46,4 @@ def get_invoice_text(invoice_id: int) -> FileResponse:
 
 @router.get("/health")
 def health() -> int:
-    time.sleep(2)
-    return 200
+    return True

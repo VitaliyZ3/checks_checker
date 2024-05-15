@@ -31,6 +31,9 @@ class InvoiceDatabase:
             autoflush=False
         )
 
+    def __del__(self):
+        self.session.close()
+
     def save_invoice_to_db(self, invoice_to_create: InvoiceModelSchema) -> Invoice:
         invoice_db = Invoice(
             total=invoice_to_create.total,

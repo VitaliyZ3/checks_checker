@@ -1,1 +1,1 @@
-locust -f locust.py --host http://localhost:8000 --users 500 --spawn-rate 20
+locust -f invoice_test.py --host http://localhost:8000 --users 50 --spawn-rate 2
